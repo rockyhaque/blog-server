@@ -1,0 +1,64 @@
+import { StatusCodes } from 'http-status-codes'
+import catchAsync from '../../utils/catchAsync'
+import sendResponse from '../../utils/sendResponse'
+import { userServices } from './user.service'
+
+const createUser = catchAsync(async (req, res) => {
+  const payload = req.body
+  const result = await userServices.createUser(payload)
+
+  sendResponse(res, {
+    status: true,
+    statusCode: StatusCodes.CREATED,
+    message: 'User has been created',
+    data: result,
+  })
+})
+
+const getUsers = catchAsync(async (req, res) => {
+  const result = await userServices.getUsers()
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: 'User getting succesfully',
+    data: result,
+  })
+})
+
+const getSingleUser = catchAsync(async (req, res) => {
+  const userId = req.params.userId
+  const result = await userServices.getSingleUser(userId)
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: 'Single User getting succesfully',
+    data: result,
+  })
+})
+
+const updateUser = catchAsync(async (req, res) => {
+  const userId = req.params.userId
+  const body = req.body
+  const result = await userServices.updateUser(userId, body)
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: 'User updated succesfully',
+    data: result,
+  })
+})
+
+const deleteUser = catchAsync(async (req, res) => {
+  const userId = req.params.userId
+  await userServices.deleteUser(userId)
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: 'User deleted succesfully',
+    data: {},
+  })
+})
+
+export const UserControllers = {
+  createUser,
+  getUsers,
+  getSingleUser,
+  updateUser,
+  deleteUser,
+}

@@ -3,12 +3,12 @@ import validateRequest from '../../middlewares/validateRequest'
 import { BlogControllers } from './blog.controller'
 import { BlogValidation } from './blog.validation'
 
-const blogRoutes = express.Router()
+const blogRouter = express.Router()
 
-blogRoutes.post(
-  '/create-blog',
+blogRouter.post(
+  '/',
   validateRequest(BlogValidation.createBlogValidationSchema),
   BlogControllers.createBlog
 )
 
-export default blogRoutes
+export default blogRouter
