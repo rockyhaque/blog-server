@@ -1,12 +1,13 @@
 import express, { Request, Response } from 'express'
 import { globalErrorHandler } from './middlewares/globalErrorHandler'
+import blogRoutes from './module/blog/blog.route'
 
 const app = express()
 
 // middleware
 app.use(express.json())
 
-// app.use('/api/products', productRouter)
+app.use('/api/blogs', blogRoutes)
 
 app.get('/', (req: Request, res: Response) => {
   res.send({

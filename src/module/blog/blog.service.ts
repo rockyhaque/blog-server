@@ -6,6 +6,6 @@ const createBlog = async (payload: IBlog) => {
   return result
 }
 
-export const blogService = {
+export const blogServices = {
   createBlog,
 }
