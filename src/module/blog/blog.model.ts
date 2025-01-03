@@ -6,7 +6,6 @@ const blogSchema = new Schema<IBlog>(
     title: {
       type: String,
       required: [true, 'Please provide a title for the blog'],
-      unique: true,
     },
     content: {
       type: String,

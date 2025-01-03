@@ -31,6 +31,8 @@ const auth = (...requiredRole: string[]) => {
     // Verify the token
     const decoded = jwt.verify(token, "secret") as JwtPayload;
 
+    // console.log(decoded)
+
     const {email, role} = decoded;
 
     const user = await User.findOne({email})
@@ -48,6 +50,8 @@ const auth = (...requiredRole: string[]) => {
     }
 
     req.user = decoded as JwtPayload
+
+    // console.log("decoded", decoded)
 
     next()
 

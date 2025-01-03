@@ -2,9 +2,14 @@ import { StatusCodes } from 'http-status-codes'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { blogServices } from './blog.service'
+import { JwtPayload } from 'jsonwebtoken'
 
 const createBlog = catchAsync(async (req, res) => {
-  const result = await blogServices.createBlog(req.body)
+  const userId = (req.user as JwtPayload).id;
+  const result = await blogServices.createBlog(req.body, userId)
+
+
+  // console.log("userId", userId)
 
   sendResponse(res, {
     success: true,

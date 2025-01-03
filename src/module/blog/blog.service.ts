@@ -2,8 +2,8 @@ import QueryBuilder from '../../builder/QueryBuilder'
 import { IBlog } from './blog.interface'
 import Blog from './blog.model'
 
-const createBlog = async (payload: IBlog) => {
-  const result = await Blog.create(payload)
+const createBlog = async (payload: IBlog, userId: string) => {
+  const result = await Blog.create({...payload, author: userId})
   return result
 }
 

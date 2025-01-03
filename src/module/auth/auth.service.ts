@@ -13,6 +13,8 @@ const register = async (payload: IUser) => {
 const login = async (payload: ILoginUser) => {
   const user = await User.findOne({ email: payload.email }).select('+password')
 
+  // console.log("user", user)
+
   if (!user) {
     throw new Error('User not found')
   }
@@ -29,6 +31,7 @@ const login = async (payload: ILoginUser) => {
 
   const token = jwt.sign(
     {
+      id: user?._id,
       email: user?.email,
       role: user?.role,
     },
