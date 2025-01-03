@@ -4,6 +4,31 @@ Develop a backend for a blogging platform with secure authentication, role-based
 
 > Live Link ➡️ https://bi-cycle-elite.vercel.app
 
+## Credentials
+
+### 🥇Admin Login
+
+Email:
+```
+auth.admin.rocky2@gmail.com
+```
+password:
+```
+authAdmin123
+```
+<hr>
+
+### 🥈User Login
+
+Email:
+```
+auth.user.rocky3@gmail.com
+```
+password:
+```
+authUser123
+```
+
 ## Features
 
 ### Bicycle Management
@@ -47,8 +72,8 @@ Develop a backend for a blogging platform with secure authentication, role-based
 ## Getting Started
 
 ### Project Structure
-![Code Example](https://i.ibb.co.com/XtTT1DJ/carbon-4.png)
 
+![Code Example](https://i.ibb.co.com/XtTT1DJ/carbon-4.png)
 
 ### Prerequisites
 
@@ -142,21 +167,23 @@ Develop a backend for a blogging platform with secure authentication, role-based
     - Endpoint: `POST /api/orders`
     - Request Body:
 
-        ```
-        {
-        "email": "customer@example.com",
-        "product": "648a45e5f0123c45678d9012",
-        "quantity": 2,
-        "totalPrice": 600
-        }
-        ```
+      ```
+      {
+      "email": "customer@example.com",
+      "product": "648a45e5f0123c45678d9012",
+      "quantity": 2,
+      "totalPrice": 600
+      }
+      ```
+
     - Response: Success message with order details.
 
-2. Calculate Revenue
+2.  Calculate Revenue
     - Endpoint: `GET /api/orders/revenue`
     - Response: Total revenue from all orders
 
 ## Error Response Example
+
 ### Validation Error
 
 ```
@@ -178,6 +205,7 @@ Develop a backend for a blogging platform with secure authentication, role-based
 ```
 
 ### Resource Not Found
+
 ```
 {
   "message": "Bicycle not found",
@@ -187,20 +215,23 @@ Develop a backend for a blogging platform with secure authentication, role-based
 ```
 
 ## Contributing
+
 1. Fork the repository.
 2. Create a new branch:
 
-    ```
-    git checkout -b feature-name
-    ```
+   ```
+   git checkout -b feature-name
+   ```
+
 3. Commit and push changes:
-    ```
-    git commit -m "Add feature-name"
-    ```
-    ```
-    git push origin feature-name
-    ```
+   ```
+   git commit -m "Add feature-name"
+   ```
+   ```
+   git push origin feature-name
+   ```
 4. Open a pull request.
 
 ## Contact
+
 For inquiries, reach out to rockyhaque71@gmail.com
