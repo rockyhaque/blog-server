@@ -29,10 +29,30 @@ const deleteUser = async (id: string) => {
   return result
 }
 
+
+const blockUser = async (userId: string) => {
+  const user = await User.findById(userId);
+
+  if(!user) {
+    throw new Error('User not found');
+  }
+
+  if(user.isBlocked){
+    throw new Error('User is already blocked');
+  }
+
+  user.isBlocked = true;
+  await user.save();
+
+  return user
+}
+
+
 export const userServices = {
   createUser,
   getUsers,
   getSingleUser,
   updateUser,
   deleteUser,
+  blockUser
 }

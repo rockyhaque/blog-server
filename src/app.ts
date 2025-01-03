@@ -13,6 +13,10 @@ app.use('/api/auth', authRouter)
 app.use('/api/blogs', blogRouter)
 app.use('/api/users', userRouter)
 
+// Admin Routes
+app.use('/api/admin/users', userRouter)
+app.use('/api/admin/blogs', blogRouter)
+
 app.get('/', (req: Request, res: Response) => {
   res.send({
     success: true,

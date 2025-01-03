@@ -24,7 +24,7 @@ const userSchema = new Schema<IUser>(
     password: {
       type: String,
       required: [true, 'Password is required'],
-      select: false
+      select: false,
     },
     role: {
       type: String,
@@ -41,21 +41,33 @@ const userSchema = new Schema<IUser>(
   }
 )
 
-
 //* hashing password
-userSchema.pre('save', async function(next){
+// userSchema.pre('save', async function(next){
+//   const user = this;
+//   user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds))
+//   next()
+// })
+
+// * Alternative way to hash password
+userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this;
-  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds))
+  const user = this
+
+  // Hash password only if it's new or modified
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(
+      user.password,
+      Number(config.bcrypt_salt_rounds)
+    )
+  }
+
   next()
 })
 
-userSchema.post('save', function(doc, next){
-  doc.password = '';
+userSchema.post('save', function (doc, next) {
+  doc.password = ''
   next()
 })
-
-
 
 const User = model<IUser>('User', userSchema)
 
