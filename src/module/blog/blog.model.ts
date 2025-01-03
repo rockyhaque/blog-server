@@ -15,7 +15,7 @@ const blogSchema = new Schema<IBlog>(
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: [true, 'Please provide an author for the blog'],
+      // required: [true, 'Please provide an author for the blog'],
     },
     isPublished: {
       type: Boolean,

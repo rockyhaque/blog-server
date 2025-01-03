@@ -15,9 +15,9 @@ const createBlogValidationSchema = z.object({
 
   author: z.string({
     required_error: 'Please provide an author for the blog',
-  }),
+  }).optional(),
 
-  isPublished: z.boolean().optional(),
+  isPublished: z.boolean().default(true),
 })
 
 export const BlogValidation = {
