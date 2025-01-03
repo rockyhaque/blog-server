@@ -58,7 +58,13 @@ const updateBlog = catchAsync(async (req, res) => {
 
 const deleteBlog = catchAsync(async (req, res) => {
   const id = req.params.id
-  await blogServices.deleteBlog(id)
+  const authorId = (req.user as JwtPayload).id;
+
+  // console.log("authorId", authorId) // authorId 677835e73859f04f71eb4f5f
+  // console.log("id", id)
+
+
+  await blogServices.deleteBlog(id, authorId)
 
   sendResponse(res, {
     success: true,
