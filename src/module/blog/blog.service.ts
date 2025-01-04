@@ -27,7 +27,9 @@ const getSingleBlog = async (id: string) => {
 }
 
 const updateBlog = async (id: string, payload: Partial<IBlog>) => {
-  const result = await Blog.findByIdAndUpdate(id, payload)
+  const result = await Blog.findByIdAndUpdate(id, payload, {
+    new: true,
+  })
   return result
 }
 

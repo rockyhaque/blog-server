@@ -1,8 +1,13 @@
 # Blog Server
 
-Develop a backend for a blogging platform with secure authentication, role-based access, and public APIs for blog viewing with search, sort, and filter. Admins manage users and blogs; users manage their blogs.
+A blogging platform API that allows users to perform authentication, manage users, and handle blog operations. Built with **Node.js**, **Express**, and **MongoDB**, this project implements user authentication, role-based access control, and CRUD operations.
 
-> Live Link ➡️ https://bi-cycle-elite.vercel.app
+- **Admin** has special permissions to manage users and their blogs.
+- **Users** can perform CRUD operations on their own blogs. 
+
+<br>
+
+> Live Link ➡️ 
 
 ## Credentials
 
@@ -10,7 +15,7 @@ Develop a backend for a blogging platform with secure authentication, role-based
 
 Email:
 ```
-auth.admin.rocky2@gmail.com
+auth.admin.rocky@gmail.com
 ```
 password:
 ```
@@ -22,39 +27,35 @@ authAdmin123
 
 Email:
 ```
-auth.user.rocky3@gmail.com
+auth.user.rocky@gmail.com
 ```
 password:
 ```
 authUser123
 ```
 
-## Features
+## Features & Roles
 
-### Bicycle Management
 
-- Add new bicycles with details like name, brand, price, type, and availability.
-- Retrieve all bicycles or filter using search terms (e.g., type, brand, name).
-- View details of a specific bicycle by its ID.
-- Update bicycle information such as price, quantity, or stock status.
-- Delete a bicycle from the inventory.
+#### Admin:
+- Created manually in the database with predefined credentials.
+- Can delete any blog.
+- Can block any user by updating the `isBlocked` property.
+- **Cannot update any blog**.
 
-### Order Management
+#### User:
+- Can register and log in.
+- Can create blogs (only when logged in).
+- Can update and delete their own blogs.
+- **Cannot perform admin actions**.
 
-- Place orders for bicycles with email, product, quantity, and total price.
-- Validate stock availability before order creation.
-- Automatically reduce inventory when an order is placed.
+### 2. Authentication & Authorization
+- **Authentication**:
+  - Users must log in to perform write, update, and delete operations.
+- **Authorization**:
+  - Admin and User roles must be differentiated and secured.
 
-### Inventory Management
 
-- Update product inventory dynamically.
-- Mark a product as out of stock when the quantity reaches zero.
-- Handle insufficient stock scenarios with proper error messages.
-
-### Revenue Calculation
-
-- Calculate total revenue generated from all orders.
-- Leverage MongoDB aggregation pipelines for efficient revenue computation.
 
 ### Error Handling
 
@@ -64,16 +65,20 @@ authUser123
 
 ## Tech Stack
 
-- **Frontend:** Not included in this project (can be integrated later).
-- **Backend:** Node.js, Express.js, TypeScript.
-- **Database:** MongoDB with Mongoose.
-- **Other Tools:** ESLint, Prettier, Nodemon
+- **Node.js**
+- **Express.js**
+- **MongoDB**
+- **JWT** for authentication
+- **Zod** for validation
+- **bcrypt** for password hashing
 
 ## Getting Started
 
 ### Project Structure
 
-![Code Example](https://i.ibb.co.com/XtTT1DJ/carbon-4.png)
+![Code Example](https://i.ibb.co.com/qYK7M9Y/carbon-6.png)
+
+
 
 ### Prerequisites
 
@@ -86,11 +91,11 @@ authUser123
 1. Clone the Repository
 
    ```
-   https://github.com/rockyhaque/bi-cycle-store-server
+   https://github.com/rockyhaque/blog-server
    ```
 
    ```
-   cd bicycle-order-management
+   cd blog-server
    ```
 
 2. Install Dependencies
@@ -117,70 +122,116 @@ authUser123
 
 ## API Endpoints
 
-### Bicycles
+### 1. Authentication
 
-1. Create a Bicycle
+📌  Register User - 
 
-   - Endpoint: `POST /api/products`
-   - Request Body:
-
-     ```
-     {
-        "name": "Trail Blazer 2000",
-        "brand": "TrailMasters",
-        "price": 300,
-        "type": "Mountain",
-        "description": "A durable mountain bike built for rugged trails and outdoor adventures.",
-        "quantity": 15,
-        "inStock": true
-     }
-
-     ```
-
-   - Response: Success message with created bicycle details.
-
-2. Get All Bicycles
-
-   - Endpoint: `GET /api/products`
-   - Query: `?searchTerm=type` (optional)
-   - Response: A list of all bicycles.
-
-3. Get a Specific Bicycle
-
-   - Endpoint: `GET /api/products/:productId`
-   - Response: Details of the specific bicycle.
-
-4. Update a Bicycle
-
-   - Endpoint: `PUT /api/products/:productId`
-   - Request Body: Fields to update (e.g., `price`, `quantity`).
-   - Response: Success message with updated bicycle details.
-
-5. Delete a Bicycle
-   - Endpoint: `DELETE /api/products/:productId`
-   - Response: Success message confirming the deletion.
-
-### Orders
-
-1.  Place an Order - Endpoint: POST `/api/orders` - Request Body:
-
-    - Endpoint: `POST /api/orders`
+    - Endpoint: `POST /api/auth/register`
     - Request Body:
 
       ```
       {
-      "email": "customer@example.com",
-      "product": "648a45e5f0123c45678d9012",
-      "quantity": 2,
-      "totalPrice": 600
+         "name": "John Doe",
+         "email": "john@example.com",
+         "password": "securepassword"
       }
       ```
 
-    - Response: Success message with order details.
+    - Response: User registered successfully
 
-2.  Calculate Revenue
-    - Endpoint: `GET /api/orders/revenue`
-    - Response: Total revenue from all orders
+📌  Login User - 
+
+    - Endpoint: `POST /api/auth/login`
+    - Request Body:
+
+      ```
+      {
+         "email": "john@example.com",
+         "password": "securepassword"
+      }
+      ```
+
+    - Response: Login successful
+
+
+
+
+### 2. Blogs
+
+1. Create a Blogs
+
+   - Endpoint: `/api/blogs`
+   - Request Body:
+
+     ```
+     {
+        "title": "My First Blog",
+        "content": "This is the content of my blog."
+     }
+     ```
+
+   - Response: Success message with created blog details.
+
+2. Get All Blogs
+
+   #### Query Parameters:
+
+   - `search:` Search blogs by title or content (e.g., `search=blogtitle`).
+   - `sortBy:` Sort blogs by specific fields such as `createdAt` or `title` (e.g., `sortBy=title`).
+   - `sortOrder:` Defines the sorting order. Accepts values `asc` (ascending) or `desc` (descending). (e.g., `sortOrder=desc`).
+   - `filter:` Filter blogs by author ID (e.g., `filter=authorId`).
+
+   #### Example Request URL:
+      ```
+      /api/blogs?search=technology&sortBy=createdAt&sortOrder=desc&filter=60b8f42f9c2a3c9b7cbd4f18
+      ```
+
+3. Get a Specific Blog
+
+   - Endpoint: `GET /api/blogs/:id`
+   - Response: Details of the specific Blog.
+
+4. Update a Blog
+
+   - Endpoint: `PATCH /api/blog/:id`
+   - Request Body: Fields to update (e.g., `title`, `content`).
+   - Response: Success message with updated Blog details.
+
+5. Delete a Blog
+   - Endpoint: `DELETE /api/blogs/:id`
+   - Response: Success message confirming the deletion.
+
+
+### 3. Admin Actions
+
+### **1. Block User**
+
+#### Endpoint
+`PATCH /api/admin/users/:userId/block`
+
+#### Description
+Allows an admin to block a user by updating the `isBlocked` property to `true`.
+
+#### Request Header
+
+> Authorization: Bearer <admin_token>
+
+
+
+### **2. Delete Blog**
+
+#### Endpoint
+`PATCH /api/admin/blogs/:id`
+
+#### Description
+Allows an admin to delete any blog by its ID.
+
+#### Request Header
+
+> Authorization: Bearer <admin_token>
+
+
+
 
 ## Error Response Example
 
@@ -188,18 +239,11 @@ authUser123
 
 ```
 {
-  "message": "Validation failed",
   "success": false,
-  "error": {
-    "name": "ValidationError",
-    "errors": {
-      "price": {
-        "message": "Price must be a positive number",
-        "type": "min",
-        "value": -10
-      }
-    }
-  }
+  "message": "Error message describing the issue",
+  "statusCode": 400, // or other relevant HTTP status code
+  "error": {"details": "Additional error details, if applicable"},
+  "stack": "error stack trace, if available"
 }
 
 ```
@@ -208,7 +252,7 @@ authUser123
 
 ```
 {
-  "message": "Bicycle not found",
+  "message": "Not found",
   "success": false,
   "error": "ResourceNotFound"
 }
