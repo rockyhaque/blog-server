@@ -7,17 +7,17 @@ A blogging platform API that allows users to perform authentication, manage user
 
 <br>
 
-> Live Link ➡️ 
+> Live Link ➡️ https://blog-server-gamma-tan.vercel.app
 
 ## Credentials
 
 ### 🥇Admin Login
 
-Email:
+📩 Email:
 ```
 auth.admin.rocky@gmail.com
 ```
-password:
+👁️ password:
 ```
 authAdmin123
 ```
@@ -25,14 +25,15 @@ authAdmin123
 
 ### 🥈User Login
 
-Email:
+📩 Email:
 ```
 auth.user.rocky@gmail.com
 ```
-password:
+👁️ password:
 ```
 authUser123
 ```
+
 
 ## Features & Roles
 
@@ -107,12 +108,12 @@ authUser123
 3. Set Up Environment Variables Create a `.env` file in the root directory and include the following:
 
    ```
+   NODE_ENV=development
    PORT=5000
+   MONGO_URI=mongodb://localhost:27017
+   BCRYPT_SALT_ROUNDS=8
    ```
 
-   ```
-   MONGO_URI=mongodb://localhost:27017
-   ```
 
 4. Run the Application Start the server in development mode:
 
