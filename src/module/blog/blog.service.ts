@@ -26,7 +26,18 @@ const getSingleBlog = async (id: string) => {
   return result
 }
 
-const updateBlog = async (id: string, payload: Partial<IBlog>) => {
+const updateBlog = async (id: string, authorId: string, userRole: string, payload: Partial<IBlog>) => {
+  const blog = await Blog.findById(id);
+
+  if(!blog) {
+    throw new Error('Blog not found');
+  }
+
+  if(blog.author?.toString() !== authorId){
+    throw new Error('You are not authorized to update this blog');
+  }
+
+
   const result = await Blog.findByIdAndUpdate(id, payload, {
     new: true,
   })

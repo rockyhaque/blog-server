@@ -44,9 +44,11 @@ const getSingleBlog = catchAsync(async (req, res) => {
 
 const updateBlog = catchAsync(async (req, res) => {
   const id = req.params.id
+  const authorId = (req.user as JwtPayload).id;
+  const userRole = (req.user as JwtPayload).role;
   const body = req.body
   // console.log(body)
-  const result = await blogServices.updateBlog(id, body)
+  const result = await blogServices.updateBlog(id, authorId, userRole, body)
 
   sendResponse(res, {
     success: true,
