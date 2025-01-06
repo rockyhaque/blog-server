@@ -7,11 +7,17 @@ import { StatusCodes } from 'http-status-codes'
 const register = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.register(req.body)
 
+  const filteredResult = {
+    _id: result._id,
+    name: result.name,
+    email: result.email
+  }
+
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.CREATED,
     message: 'User registered successfully',
-    data: result,
+    data: filteredResult,
   })
 })
 

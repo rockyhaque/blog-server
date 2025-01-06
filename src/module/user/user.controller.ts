@@ -63,7 +63,7 @@ const blockUser = catchAsync(async (req, res) => {
     success: true,
     statusCode: StatusCodes.OK,
     message: 'User blocked successfully',
-    data: {},
+    // data: {},
   })
 })
 
