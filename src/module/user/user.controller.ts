@@ -57,12 +57,13 @@ const deleteUser = catchAsync(async (req, res) => {
 
 const blockUser = catchAsync(async (req, res) => {
   const userId = req.params.userId;
-  const updatedUser = await userServices.blockUser(userId);
+  await userServices.blockUser(userId);
 
   sendResponse(res, {
+    success: true,
     statusCode: StatusCodes.OK,
     message: 'User blocked successfully',
-    data: updatedUser,
+    data: {},
   })
 })
 

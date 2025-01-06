@@ -3,7 +3,7 @@ import { IBlog } from './blog.interface'
 import Blog from './blog.model'
 
 const createBlog = async (payload: IBlog, userId: string) => {
-  const result = await Blog.create({ ...payload, author: userId })
+  const result = (await Blog.create({ ...payload, author: userId })).populate('author');
   return result
 }
 
@@ -17,7 +17,7 @@ const getBlogs = async (query: Record<string, unknown>) => {
     .sort()
     .select()
 
-  const result = await tours.modelQuery
+  const result = await tours.modelQuery.populate('author')
   return result
 }
 
@@ -40,7 +40,7 @@ const updateBlog = async (id: string, authorId: string, userRole: string, payloa
 
   const result = await Blog.findByIdAndUpdate(id, payload, {
     new: true,
-  })
+  }).populate('author');
   return result
 }
 
