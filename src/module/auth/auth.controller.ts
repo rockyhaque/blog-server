@@ -20,10 +20,13 @@ const login = catchAsync(async (req: Request, res: Response) => {
 
   sendResponse(res, {
     success: true,
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     message: 'Login successful',
-    token: result.token,
-    data: result.verifiedUser,
+    // token: result.token,
+    // data: result.verifiedUser,
+    data: {
+      token: result.token,
+    }
   })
 })
 
