@@ -20,7 +20,7 @@ app.use('/api/admin/blogs', blogRouter)
 app.get('/', (req: Request, res: Response) => {
   res.send({
     success: true,
-    message: 'Blog Store Server is running 🥰',
+    message: 'Blog Server is running 🥰',
   })
 })
 
